@@ -24,8 +24,14 @@ class windowClass(QMainWindow):
         lst = [f"self.{name}_label = QLabel(self)", f"self.{name}_label.setText('{text}')", f"self.{name}_label.move({xpos}, {ypos})"]
         for i in lst:
             exec(i)
+
+    def createMsg(self, name, text):
+        msg = QMessageBox()
+        msg.setWindowTitle(name)
+        msg.setText(text)
+        msg.exec_()
     
-def switchWindow(window1, window2):
+def switchWindow(window1, window2, *args, **kwargs):
     window1.hide()
     window2.show()
 

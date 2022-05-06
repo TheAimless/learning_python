@@ -30,19 +30,13 @@ class loginWidget(appCore.windowClass, loginData):
     def loginButtonAction(self, window1, window2, *args, **kwargs):
         self.data = self.loginList()
         userCredential, passCredential = self.user_input.displayText(), self.pass_input.displayText()
-        if self.data.get(userCredential) != passCredential:
+        if self.data.get(userCredential) != passCredential or userCredential == "" or passCredential == "":
             def temp():
-                self.errorLogin()
+                self.createMsg('Error', "Invalid login credentials")
                 self.node_3_btn.setText("Try again")
             return temp() 
         else:
             return args[0](window1, window2) 
-
-    def errorLogin(self):
-        msg = QMessageBox()
-        msg.setWindowTitle('Error')
-        msg.setText("Invalid login credentials")
-        msg.exec_()
 
 class regWidget(appCore.windowClass, loginData):
     def __init__(self):
@@ -69,18 +63,6 @@ class regWidget(appCore.windowClass, loginData):
         self.createBtn(name = "node_1", text = "Back", xpos = "1440", ypos = "540")
         self.reg_btn.clicked.connect(self.regButtonAction)
 
-    def errorRegisterNotSame(self):
-        msg = QMessageBox()
-        msg.setWindowTitle('Error')
-        msg.setText("Passwords do not match")
-        msg.exec_()
-
-    def errorRegisterUserExist(self):
-        msg = QMessageBox()
-        msg.setWindowTitle('Error')
-        msg.setText("Username exists")
-        msg.exec_()
-    
     def registrationSuccessful(self, user, pw):
         self.updateLogin(user, pw)
         self.reg_btn.setText("Registered")
@@ -88,11 +70,13 @@ class regWidget(appCore.windowClass, loginData):
     def regButtonAction(self):
         self.data = self.loginList()
         userCredential, passCredential, confirmCredential = self.user_input.displayText(), self.pass_input.displayText(), self.confirm_input.displayText()
+        if userCredential == "" or passCredential == "":
+            self.createMsg('Error', "Invalid credentials")
+            return
         if self.data.get(userCredential) != None:
-            self.errorRegisterUserExist()
+            self.createMsg('Error', "User already exists")
             return
         if passCredential != confirmCredential:
-            self.errorRegisterNotSame()
+            self.createMsg('Error', "Passwords do not match")
             return
         self.registrationSuccessful(userCredential, passCredential)
-        self.data = self.loginList()

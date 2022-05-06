@@ -23,6 +23,7 @@ class loginWidget(appCore.windowClass, loginData):
         self.user_input.move(720, 200)
         self.pass_input = QLineEdit(self)
         self.pass_input.move(720, 400)
+        self.pass_input.setEchoMode(QLineEdit.PasswordEchoOnEdit)
 
         self.createBtn(name = "node_3", text = "Login", xpos = "480", ypos = "540")
         self.createBtn(name = "node_2", text = "Register", xpos = "1440", ypos = "540")
@@ -37,6 +38,12 @@ class loginWidget(appCore.windowClass, loginData):
             return temp() 
         else:
             return args[0](window1, window2) 
+
+    def resetWindow(self):
+        self.node_3_btn.setText("Login")
+        self.node_2_btn.setText("Register")
+        self.user_input.clear()
+        self.pass_input.clear()
 
 class regWidget(appCore.windowClass, loginData):
     def __init__(self):
@@ -57,7 +64,9 @@ class regWidget(appCore.windowClass, loginData):
         self.user_input, self.pass_input, self.confirm_input = QLineEdit(self), QLineEdit(self), QLineEdit(self)
         self.user_input.move(720, 200)
         self.pass_input.move(720, 400)
+        self.pass_input.setEchoMode(QLineEdit.PasswordEchoOnEdit)
         self.confirm_input.move(720, 600)
+        self.confirm_input.setEchoMode(QLineEdit.PasswordEchoOnEdit)
 
         self.createBtn(name = "reg", text = "Register", xpos = "480", ypos = "540")
         self.createBtn(name = "node_1", text = "Back", xpos = "1440", ypos = "540")
@@ -80,3 +89,10 @@ class regWidget(appCore.windowClass, loginData):
             self.createMsg('Error', "Passwords do not match")
             return
         self.registrationSuccessful(userCredential, passCredential)
+
+    def resetWindow(self):
+        self.reg_btn.setText("Register")
+        self.node_1_btn.setText("Back")
+        self.user_input.clear()
+        self.pass_input.clear()
+        self.confirm_input.clear()

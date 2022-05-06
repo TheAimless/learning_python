@@ -13,7 +13,7 @@ if __name__ == '__main__':
     login.setupWidget()
     mainwin.setupWidget()
 
-    login.show()
+    login.showMaximized()
 
     #Adds linking method between different windows 
     ac.addEdge(reg, login, ac.switchWindow)

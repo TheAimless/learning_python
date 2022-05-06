@@ -31,9 +31,10 @@ class windowClass(QMainWindow):
         msg.setText(text)
         msg.exec_()
     
-def switchWindow(window1, window2, *args, **kwargs):
+def switchWindow(window1, window2):
     window1.hide()
-    window2.show()
+    window2.resetWindow()
+    window2.showMaximized()
 
 def addEdge(window1, window2, func, *args, **kwargs):
     getattr(window1, f"{window2.id}_btn").clicked.connect(lambda: func(window1, window2, *args, **kwargs))

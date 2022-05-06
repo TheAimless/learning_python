@@ -30,5 +30,4 @@ def switchWindow(window1, window2):
     window2.show()
 
 def addEdge(window1, window2, func, *args, **kwargs):
-    #print(lambda: func(window1, window2, *args, **kwargs)())
     getattr(window1, f"{window2.id}_btn").clicked.connect(lambda: func(window1, window2, *args, **kwargs))

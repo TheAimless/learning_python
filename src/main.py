@@ -14,8 +14,12 @@ if __name__ == '__main__':
     mainwin.setupWidget()
 
     login.show()
+
+    #Adds linking method between different windows 
     ac.addEdge(reg, login, ac.switchWindow)
     ac.addEdge(login, reg, ac.switchWindow)
     ac.addEdge(login, mainwin, login.loginButtonAction, ac.switchWindow)
     ac.addEdge(mainwin, login, ac.switchWindow)
+
+    #Runs app
     sys.exit(app.exec_())

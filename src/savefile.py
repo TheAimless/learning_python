@@ -9,11 +9,19 @@ class saveFile:
     def fileRead(self):
         self.filename = dir.joinpath("data.json")
         try:
-            self.file = self.filename.open(mode = 'r+')
+            self.file = open(self.filename, 'r+')
         except:
             self.filename.touch()
-            self.file = self.filename.open(mode = 'r+')
+            self.file = open(self.filename, 'r+')
         self.json_file = json.load(self.file)
+
+    def fileWrite(self, data):
+        self.filename = dir.joinpath("data.json")
+        try:
+            self.file = open(self.filename, 'w')
+        finally:
+            json.dump(data, self.file, indent = 4)
+            self.file.close()
 
     def loadData(self, data):
         try: 

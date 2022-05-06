@@ -10,7 +10,6 @@ class loginWidget(appCore.windowClass, loginData):
         super(loginData, self).__init__()
         self.data = self.loginList()
         self.createNode()
-        self.flag = False
     
     def setupWidget(self):
         self.setWindowTitle('Login')
@@ -29,6 +28,7 @@ class loginWidget(appCore.windowClass, loginData):
         self.createBtn(name = "node_2", text = "Register", xpos = "1440", ypos = "540")
 
     def loginButtonAction(self, window1, window2, *args, **kwargs):
+        self.data = self.loginList()
         userCredential, passCredential = self.user_input.displayText(), self.pass_input.displayText()
         if self.data.get(userCredential) != passCredential:
             def temp():
@@ -44,9 +44,11 @@ class loginWidget(appCore.windowClass, loginData):
         msg.setText("Invalid login credentials")
         msg.exec_()
 
-class regWidget(appCore.windowClass):
+class regWidget(appCore.windowClass, loginData):
     def __init__(self):
         super(appCore.windowClass, self).__init__()
+        super(loginData, self).__init__()
+        self.data = self.loginList()
         self.createNode()
 
     def setupWidget(self):
@@ -68,21 +70,29 @@ class regWidget(appCore.windowClass):
         self.reg_btn.clicked.connect(self.regButtonAction)
 
     def errorRegisterNotSame(self):
-        pass
+        msg = QMessageBox()
+        msg.setWindowTitle('Error')
+        msg.setText("Passwords do not match")
+        msg.exec_()
 
     def errorRegisterUserExist(self):
-        pass
+        msg = QMessageBox()
+        msg.setWindowTitle('Error')
+        msg.setText("Username exists")
+        msg.exec_()
+    
+    def registrationSuccessful(self, user, pw):
+        self.updateLogin(user, pw)
+        self.reg_btn.setText("Registered")
 
     def regButtonAction(self):
+        self.data = self.loginList()
         userCredential, passCredential, confirmCredential = self.user_input.displayText(), self.pass_input.displayText(), self.confirm_input.displayText()
+        if self.data.get(userCredential) != None:
+            self.errorRegisterUserExist()
+            return
         if passCredential != confirmCredential:
             self.errorRegisterNotSame()
             return
-        if self.data.get(userCredential) != None:
-            self.btn_login.setText("Logined")
-        else:
-            self.errorLogin()
-            self.btn_login.setText("Try again")
-
-    def backButtonAction(self):
-        pass
+        self.registrationSuccessful(userCredential, passCredential)
+        self.data = self.loginList()

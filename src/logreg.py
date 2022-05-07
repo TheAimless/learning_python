@@ -23,6 +23,7 @@ class loginWidget(appCore.windowClass, loginData):
         self.user_input.move(720, 200)
         self.pass_input = QLineEdit(self)
         self.pass_input.move(720, 400)
+        self.pass_input.setEchoMode(QLineEdit.PasswordEchoOnEdit)
 
         self.createBtn(name = "node_3", text = "Login", xpos = "480", ypos = "540")
         self.createBtn(name = "node_2", text = "Register", xpos = "1440", ypos = "540")
@@ -30,19 +31,19 @@ class loginWidget(appCore.windowClass, loginData):
     def loginButtonAction(self, window1, window2, *args, **kwargs):
         self.data = self.loginList()
         userCredential, passCredential = self.user_input.displayText(), self.pass_input.displayText()
-        if self.data.get(userCredential) != passCredential:
+        if self.data.get(userCredential) != passCredential or userCredential == "" or passCredential == "":
             def temp():
-                self.errorLogin()
+                self.createMsg('Error', "Invalid login credentials")
                 self.node_3_btn.setText("Try again")
             return temp() 
         else:
             return args[0](window1, window2) 
 
-    def errorLogin(self):
-        msg = QMessageBox()
-        msg.setWindowTitle('Error')
-        msg.setText("Invalid login credentials")
-        msg.exec_()
+    def resetWindow(self):
+        self.node_3_btn.setText("Login")
+        self.node_2_btn.setText("Register")
+        self.user_input.clear()
+        self.pass_input.clear()
 
 class regWidget(appCore.windowClass, loginData):
     def __init__(self):
@@ -63,24 +64,14 @@ class regWidget(appCore.windowClass, loginData):
         self.user_input, self.pass_input, self.confirm_input = QLineEdit(self), QLineEdit(self), QLineEdit(self)
         self.user_input.move(720, 200)
         self.pass_input.move(720, 400)
+        self.pass_input.setEchoMode(QLineEdit.PasswordEchoOnEdit)
         self.confirm_input.move(720, 600)
+        self.confirm_input.setEchoMode(QLineEdit.PasswordEchoOnEdit)
 
         self.createBtn(name = "reg", text = "Register", xpos = "480", ypos = "540")
         self.createBtn(name = "node_1", text = "Back", xpos = "1440", ypos = "540")
         self.reg_btn.clicked.connect(self.regButtonAction)
 
-    def errorRegisterNotSame(self):
-        msg = QMessageBox()
-        msg.setWindowTitle('Error')
-        msg.setText("Passwords do not match")
-        msg.exec_()
-
-    def errorRegisterUserExist(self):
-        msg = QMessageBox()
-        msg.setWindowTitle('Error')
-        msg.setText("Username exists")
-        msg.exec_()
-    
     def registrationSuccessful(self, user, pw):
         self.updateLogin(user, pw)
         self.reg_btn.setText("Registered")
@@ -88,11 +79,20 @@ class regWidget(appCore.windowClass, loginData):
     def regButtonAction(self):
         self.data = self.loginList()
         userCredential, passCredential, confirmCredential = self.user_input.displayText(), self.pass_input.displayText(), self.confirm_input.displayText()
+        if userCredential == "" or passCredential == "":
+            self.createMsg('Error', "Invalid credentials")
+            return
         if self.data.get(userCredential) != None:
-            self.errorRegisterUserExist()
+            self.createMsg('Error', "User already exists")
             return
         if passCredential != confirmCredential:
-            self.errorRegisterNotSame()
+            self.createMsg('Error', "Passwords do not match")
             return
         self.registrationSuccessful(userCredential, passCredential)
-        self.data = self.loginList()
+
+    def resetWindow(self):
+        self.reg_btn.setText("Register")
+        self.node_1_btn.setText("Back")
+        self.user_input.clear()
+        self.pass_input.clear()
+        self.confirm_input.clear()

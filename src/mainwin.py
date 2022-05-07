@@ -11,3 +11,6 @@ class mainScreen(appCore.windowClass):
         self.setGeometry(0, 0, 1920, 1080)
 
         self.createBtn(name = "node_1", text = "Logout", xpos = "540", ypos = "720")
+
+    def resetWindow(self):
+        pass

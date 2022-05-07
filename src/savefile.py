@@ -1,10 +1,17 @@
 import json, pathlib
 dir = pathlib.Path.home().joinpath("Appdata/Local/learning_python")
+INIT_JSON = {
+    "login": {
+    }
+}
 
 class saveFile:
     def __init__(self):
         if not dir.exists():
             dir.mkdir()
+        filename = dir.joinpath("data.json")
+        with open(filename, 'w') as file:
+            json.dump(INIT_JSON, file, indent = 4)
 
     def fileRead(self):
         self.filename = dir.joinpath("data.json")

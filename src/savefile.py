@@ -10,8 +10,9 @@ class saveFile:
         if not dir.exists():
             dir.mkdir()
         filename = dir.joinpath("data.json")
-        with open(filename, 'w') as file:
-            json.dump(INIT_JSON, file, indent = 4)
+        with open(filename, 'a') as file:
+            if filename.stat().st_size == 0:
+                json.dump(INIT_JSON, file, indent = 4)
 
     def fileRead(self):
         self.filename = dir.joinpath("data.json")

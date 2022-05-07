@@ -23,14 +23,14 @@ class loginWidget(appCore.windowClass, loginData):
         self.user_input.move(720, 200)
         self.pass_input = QLineEdit(self)
         self.pass_input.move(720, 400)
-        self.pass_input.setEchoMode(QLineEdit.PasswordEchoOnEdit)
+        self.pass_input.setEchoMode(QLineEdit.Password)
 
         self.createBtn(name = "node_3", text = "Login", xpos = "480", ypos = "540")
         self.createBtn(name = "node_2", text = "Register", xpos = "1440", ypos = "540")
 
     def loginButtonAction(self, window1, window2, *args, **kwargs):
         self.data = self.loginList()
-        userCredential, passCredential = self.user_input.displayText(), self.pass_input.displayText()
+        userCredential, passCredential = self.user_input.text(), self.pass_input.text()
         if self.data.get(userCredential) != passCredential or userCredential == "" or passCredential == "":
             def temp():
                 self.createMsg('Error', "Invalid login credentials")
@@ -64,9 +64,9 @@ class regWidget(appCore.windowClass, loginData):
         self.user_input, self.pass_input, self.confirm_input = QLineEdit(self), QLineEdit(self), QLineEdit(self)
         self.user_input.move(720, 200)
         self.pass_input.move(720, 400)
-        self.pass_input.setEchoMode(QLineEdit.PasswordEchoOnEdit)
+        self.pass_input.setEchoMode(QLineEdit.Password)
         self.confirm_input.move(720, 600)
-        self.confirm_input.setEchoMode(QLineEdit.PasswordEchoOnEdit)
+        self.confirm_input.setEchoMode(QLineEdit.Password)
 
         self.createBtn(name = "reg", text = "Register", xpos = "480", ypos = "540")
         self.createBtn(name = "node_1", text = "Back", xpos = "1440", ypos = "540")
@@ -78,7 +78,7 @@ class regWidget(appCore.windowClass, loginData):
 
     def regButtonAction(self):
         self.data = self.loginList()
-        userCredential, passCredential, confirmCredential = self.user_input.displayText(), self.pass_input.displayText(), self.confirm_input.displayText()
+        userCredential, passCredential, confirmCredential = self.user_input.text(), self.pass_input.text(), self.confirm_input.text()
         if userCredential == "" or passCredential == "":
             self.createMsg('Error', "Invalid credentials")
             return

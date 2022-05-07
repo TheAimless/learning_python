@@ -1,19 +1,11 @@
 #Imports
-from typing import Type
-from varname import nameof
 from PyQt5.QtWidgets import *
-from PyQt5 import QtCore
 #Variables
 NODE_COUNT = 1
 
-class windowClass(QMainWindow):
+class widgetClass(QWidget):
     def __init__(self):
-        super(QMainWindow, self).__init__()
-
-    def createNode(self):
-        global NODE_COUNT
-        self.id = f"node_{str(NODE_COUNT)}"
-        NODE_COUNT += 1
+        super(QWidget, self).__init__()
 
     def createBtn(self, name, text, xpos, ypos):
         lst = [f"self.{name}_btn = QPushButton(self)", f"self.{name}_btn.setText('{text}')", f"self.{name}_btn.move({xpos}, {ypos})"] 
@@ -30,7 +22,27 @@ class windowClass(QMainWindow):
         msg.setWindowTitle(name)
         msg.setText(text)
         msg.exec_()
-    
+
+class windowClass(QMainWindow, widgetClass):
+    def __init__(self):
+        super(QMainWindow, self).__init__()
+        super(widgetClass, self).__init__()
+
+    def createNode(self):
+        global NODE_COUNT
+        self.id = f"node_{str(NODE_COUNT)}"
+        NODE_COUNT += 1
+
+#Temporary layout class
+class layoutClass(QVBoxLayout):
+    def __init__(self):
+        super(QVBoxLayout, self).__init__()
+
+    def createBtn(self, name, text):
+        lst = [f"self.{name}_btn = QPushButton()", f"self.{name}_btn.setText('{text}')", f"self.addWidget(self.{name}_btn)"] 
+        for i in lst:
+            exec(i)
+
 class window_rootClass:
     def __init__(self, *args):
         self.windows = args
@@ -42,8 +54,11 @@ class window_rootClass:
         window2.resetWindow()
         window2.showMaximized()
 
-    def addEdge(self, id1, id2, func, *args, **kwargs):
-        getattr(self.windows[id1], f"{self.windows[id2].id}_btn").clicked.connect(lambda: func(self.windows[id1], self.windows[id2], *args, **kwargs))
+    def addEdge(self, id1, id2, obj_list, func, *args, **kwargs):
+        temp = self.windows[id1]
+        for i in obj_list:
+            temp = getattr(temp, i)
+        getattr(temp, f"{self.windows[id2].id}_btn").clicked.connect(lambda: func(self.windows[id1], self.windows[id2], *args, **kwargs))
 
     def addEdges(self, *args):
         for i in args:

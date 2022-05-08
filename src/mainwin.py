@@ -13,9 +13,10 @@ class mainScreen(appCore.windowClass):
 
         self.scrollWidgetContents = appCore.widgetClass()
         self.scrollObj = QScrollArea()
-        self.layoutObj = appCore.layoutClass()
+        self.layoutObj = QVBoxLayout()
 
-        self.layoutObj.createBtn(name = "node_1", text = "Logout")
+        self.createBtn(name = "node_1", text = "Logout")
+        self.layoutObj.addWidget(self.node_1_btn)
         self.scrollWidgetContents.setLayout(self.layoutObj)
 
         self.scrollObj.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)

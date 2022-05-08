@@ -4,16 +4,16 @@ from PyQt5.QtWidgets import *
 NODE_COUNT = 1
 
 class widgetClass(QWidget):
-    def __init__(self):
-        super(QWidget, self).__init__()
+    def __init__(self, *args):
+        super(QWidget, self).__init__(*args)
 
-    def createBtn(self, name, text, xpos, ypos):
-        lst = [f"self.{name}_btn = QPushButton(self)", f"self.{name}_btn.setText('{text}')", f"self.{name}_btn.move({xpos}, {ypos})"] 
+    def createBtn(self, name, text):
+        lst = [f"self.{name}_btn = QPushButton()", f"self.{name}_btn.setText('{text}')"] 
         for i in lst:
             exec(i)
 
-    def createLabel(self, name, text, xpos, ypos):
-        lst = [f"self.{name}_label = QLabel(self)", f"self.{name}_label.setText('{text}')", f"self.{name}_label.move({xpos}, {ypos})"]
+    def createLabel(self, name, text):
+        lst = [f"self.{name}_label = QLabel()", f"self.{name}_label.setText('{text}')"]
         for i in lst:
             exec(i)
 
@@ -32,16 +32,6 @@ class windowClass(QMainWindow, widgetClass):
         global NODE_COUNT
         self.id = f"node_{str(NODE_COUNT)}"
         NODE_COUNT += 1
-
-#Temporary layout class
-class layoutClass(QVBoxLayout):
-    def __init__(self):
-        super(QVBoxLayout, self).__init__()
-
-    def createBtn(self, name, text):
-        lst = [f"self.{name}_btn = QPushButton()", f"self.{name}_btn.setText('{text}')", f"self.addWidget(self.{name}_btn)"] 
-        for i in lst:
-            exec(i)
 
 class window_rootClass:
     def __init__(self, *args):

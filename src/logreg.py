@@ -36,8 +36,8 @@ class loginWidget(appCore.windowClass, loginData):
         self.user_input.setPlaceholderText("Username")
         self.pass_input.setPlaceholderText("Password")
 
-        self.createBtn(name = "node_3", text = "Login")
-        self.createBtn(name = "node_2", text = "Register")
+        self.createBtn(name = "node_3", text = "Login", flat = False)
+        self.createBtn(name = "node_2", text = "Register", flat = False)
         self.horlayout = QHBoxLayout()
         self.horlayout.addWidget(self.node_3_btn)
         self.horlayout.addWidget(self.node_2_btn)
@@ -96,8 +96,8 @@ class regWidget(appCore.windowClass, loginData):
         self.gridLayout_2.addWidget(self.pass_input, 2, 0, 1, 1)
         self.gridLayout_2.addWidget(self.confirm_input, 3, 0, 1, 1)
 
-        self.createBtn(name = "reg", text = "Register") 
-        self.createBtn(name = "node_1", text = "Back")
+        self.createBtn(name = "reg", text = "Register", flat = False) 
+        self.createBtn(name = "node_1", text = "Back", flat = False)
         self.horLayout = QHBoxLayout()
         self.horLayout.addWidget(self.reg_btn)
         self.horLayout.addWidget(self.node_1_btn)

@@ -15,3 +15,7 @@ Activate venv & Install prerequisites:
 
     ./Scripts/activate
     pip install -r requirements.txt
+
+Run project:
+    
+    python main.py

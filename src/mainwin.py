@@ -8,15 +8,18 @@ class mainScreen(appCore.windowClass):
         self.createNode()
 
     def setupWidget(self):
+        #Setups the main window
         self.setWindowTitle('Main Window')
         self.setGeometry(0, 0, 1920, 1080)
 
+        #Setups main window size
         sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(26)
         sizePolicy.setVerticalStretch(24)
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         self.setSizePolicy(sizePolicy)
 
+        #Setups several main widgets
         self.centralwidget = appCore.widgetClass(self)
         self.formLayout = QFormLayout(self.centralwidget)
         self.scrollArea = QScrollArea(self.centralwidget)
@@ -42,8 +45,8 @@ class mainScreen(appCore.windowClass):
         self.widget_2 = appCore.widgetClass(self.scrollAreaWidgetContents)
         self.gridLayout_2 = QGridLayout(self.widget_2)
         self.gridLayout_2.setSizeConstraint(QLayout.SetNoConstraint)
-        self.widget_2.createBtn("pb1", "pb1", False)
-        self.gridLayout_2.addWidget(self.widget_2.pb1_btn, 1, 2, 1, 1)
+        self.widget_2.createBtn("node_4", "pb1", False)
+        self.gridLayout_2.addWidget(self.widget_2.node_4_btn, 1, 2, 1, 1)
         self.widget_2.createBtn("pb2", "pb2", False)
         self.gridLayout_2.addWidget(self.widget_2.pb2_btn, 1, 0, 1, 1)
         self.widget_2.createBtn("pb3", "pb3", False)

@@ -1,4 +1,4 @@
-import sys
+import sys, psutil
 from PyQt5.QtWidgets import *
 from logreg import loginWidget, regWidget
 from mainwin import mainScreen
@@ -9,7 +9,7 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     QApplication.setStyle(QStyleFactory.create('Fusion'))
     mainUI = wrc(loginWidget(), regWidget(), mainScreen(), learnWindow())
-    mainUI.windows[0].showMaximized()
+    mainUI.windows[3].showMaximized()
 
     #Adds linking method between different windows 
     mainUI.addEdges((1, 0, (), wrc.switchWindow), (0, 1, (), wrc.switchWindow), 

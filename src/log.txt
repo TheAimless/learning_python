@@ -1,4 +1,0 @@
-Traceback (most recent call last):
-  File "C:\Users\DELL\Appdata\Local\learning_python\temp.py", line 1, in <module>
-    print(input())
-EOFError: EOF when reading a line

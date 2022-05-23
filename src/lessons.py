@@ -1,5 +1,4 @@
 from concurrent.futures import thread
-import subprocess, win32con, win32gui, win32process 
 import appCore, psutil
 from PyQt5.QtWidgets import * 
 from PyQt5.QtCore import *
@@ -136,13 +135,6 @@ class learnWindow(appCore.windowClass):
         self.verticalLayout_7 = QVBoxLayout(self.scrollAreaWidgetContents_3)
         self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_7.setSpacing(0)
-#        self.wind = QWindow.fromWinId()
-        for proc in psutil.process_iter():
-            if process_name in proc.name():
-                pid.append(proc.pid)
-
-        print(pid)
-        #print(self.find_window_for_pid())
         self.scrollAreaWidgetContents_3.console = QConsole()
         self.verticalLayout_7.addWidget(self.scrollAreaWidgetContents_3.console)
         self.scrollArea_3.setWidget(self.scrollAreaWidgetContents_3)
@@ -174,15 +166,3 @@ class learnWindow(appCore.windowClass):
 
     def resetWindow(self):
         pass
-
-    def find_window_for_pid(self, pid):
-        result = None
-        def callback(hwnd, _):
-            nonlocal result
-            ctid, cpid = win32process.GetWindowThreadProcessId(hwnd)
-            if cpid == pid:
-                result = hwnd
-                return False
-            return True
-        win32gui.EnumWindows(callback, None)
-        return result
